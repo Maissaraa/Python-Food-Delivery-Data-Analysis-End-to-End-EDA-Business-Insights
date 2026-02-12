@@ -1,0 +1,35 @@
+# ================= DATA ANALYSIS ====================
+def analyze_data(df):
+    """
+    Perform basic data analysis to gain business insights:
+    - Revenue by state to identify top-performing regions
+    - Order distribution by customer segment
+    - Average delivery time by delivery mode
+    - Identify peak order hours
+    Returns revenue by state, segment orders, and average delivery time
+    """
+    
+    print("\n" + "="*50)
+    print("DATA ANALYSIS")
+    print("="*50)
+    
+    # 1. Revenue by state
+    revenue_state = df.groupby("state")["total_amount"].sum().sort_values(ascending=False)
+    print("\nTop 5 States by Revenue:")
+    print(revenue_state.head())
+    
+    # 2. Customer segments
+    segment_orders = df["customer_segment"].value_counts()
+    print("\nOrders by Customer Segment:")
+    print(segment_orders)
+    
+    # 3. Delivery performance
+    delivery_avg = df.groupby("delivery_mode")["delivery_time_minutes"].mean().round(1)
+    print("\nAvg Delivery Time by Mode:")
+    print(delivery_avg)
+    
+    # 4. Peak hours
+    peak_hours = df.groupby("order_hour").size().sort_values(ascending=False)
+    print(f"\nPeak Order Hour: {peak_hours.index[0]} (Orders: {peak_hours.iloc[0]})")
+    
+    return revenue_state, segment_orders, delivery_avg
