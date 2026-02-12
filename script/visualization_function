@@ -33,3 +33,38 @@ def visualize_data(df):
     )
     plt.title("Correlation Matrix")
     plt.show()
+
+def plot_interactive(df):
+    """Create interactive plots with plotly"""
+    
+    print("\nCreating interactive visualizations...")
+    
+    # 1. Revenue by state - interactive bar
+    state_rev = df.groupby("state")["total_amount"].sum().sort_values(ascending=True).tail(10)
+    fig1 = px.bar(
+        x=state_rev.values,
+        y=state_rev.index,
+        orientation='h',
+        title="Top 10 States by Revenue",
+        labels={'x': 'Revenue ($)', 'y': 'State'},
+        color=state_rev.values,
+        color_continuous_scale='Blues'
+    )
+    fig1.write_html("revenue_by_state.html")
+    fig1.show()
+    
+    # 2. Delivery scatter plot
+    sample_df = df.sample(min(500, len(df)))
+    fig2 = px.scatter(
+        sample_df,
+        x='delivery_distance_km',
+        y='delivery_time_minutes',
+        color='delivery_mode',
+        size='order_value',
+        title="Delivery Time vs Distance",
+        labels={'delivery_distance_km': 'Distance (km)', 'delivery_time_minutes': 'Time (minutes)'}
+    )
+    fig2.write_html("delivery_analysis.html")
+    fig2.show()
+    
+    print("Interactive dashboards saved")
