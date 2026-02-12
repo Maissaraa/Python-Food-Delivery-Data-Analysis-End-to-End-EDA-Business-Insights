@@ -1,0 +1,35 @@
+# ================= VISUALIZATION ==================
+def visualize_data(df):
+    """
+    Create visualizations to explore the dataset:
+    - Revenue by state (bar chart)
+    - Orders by hour of the day (line chart)
+    - Correlation heatmap for numeric features
+    Helps to identify trends, patterns, and relationships in the data.
+    """
+    
+    # Revenue by state
+    plt.figure()
+    df.groupby("state")["total_amount"].sum().plot(kind="bar")
+    plt.title("Revenue by State")
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    plt.show()
+
+    # Orders by hour
+    plt.figure()
+    sns.lineplot(
+        x=df.groupby("order_hour")["order_id"].count().index,
+        y=df.groupby("order_hour")["order_id"].count().values
+    )
+    plt.title("Orders by Hour")
+    plt.show()
+
+    # Correlation heatmap
+    plt.figure()
+    sns.heatmap(
+        df.select_dtypes(include=np.number).corr(),
+        annot=False
+    )
+    plt.title("Correlation Matrix")
+    plt.show()
