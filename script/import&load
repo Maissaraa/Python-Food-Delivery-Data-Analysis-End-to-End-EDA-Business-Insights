@@ -1,0 +1,26 @@
+# Description:
+# This script performs a comprehensive analysis of a 
+# US food delivery dataset. It covers the full workflow 
+# from loading the dataset, exploring and cleaning the data,
+# feature engineering, data manipulation, calculating key 
+# performance indicators (KPIs), and visualizing insights 
+# using Python libraries (pandas, numpy, matplotlib, seaborn).
+
+# ================== IMPORT DATA ======================
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import plotly.express as px
+from datetime import datetime
+
+sns.set_style("whitegrid")
+pd.set_option('display.max_columns', 20)
+
+# ================== LOAD DATA ======================
+def load_data(path):
+    """Load the dataset"""
+    df = pd.read_csv(path, parse_dates=["order_datetime"])
+    print("✅ Data loaded successfully")
+    print(f"   Shape: {df.shape}")
+    return df
